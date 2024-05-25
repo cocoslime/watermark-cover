@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="TextWatermarkImageView">
+        <attr name="watermarkText" format="string"/>
+        <attr name="watermarkTextSize" format="dimension"/>
+        <attr name="watermarkTextColor" format="color"/>
+        <attr name="watermarkTextRotate" format="float"/>
+
+        <attr name="watermarkTextLineSpacing" format="dimension"/>
+        <attr name="watermarkTextLetterSpacing" format="dimension"/>
+    </declare-styleable>
+</resources>
