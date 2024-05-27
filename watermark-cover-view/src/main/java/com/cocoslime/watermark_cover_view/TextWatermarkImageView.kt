@@ -7,7 +7,6 @@ import android.graphics.Paint
 import android.util.AttributeSet
 import androidx.annotation.Px
 import androidx.appcompat.widget.AppCompatImageView
-import kotlin.random.Random
 
 class TextWatermarkImageView @JvmOverloads constructor(
     context: Context,
@@ -19,8 +18,16 @@ class TextWatermarkImageView @JvmOverloads constructor(
 
     private var watermarkText = "COCOSLIME"
 
-    @Px private var spacedBy: Int = DEFAULT_LETTER_SPACING
-    @Px private var lineSpacing: Int = DEFAULT_LINE_SPACING
+    private var rotationDegree: Float = DEFAULT_ROTATION_DEGREE
+    /**
+     * 텍스트 간 간격 / 텍스트 길이의 비율
+     */
+    private var letterSpacingRatio: Float = DEFAULT_LETTER_SPACING_RATIO
+
+    /**
+     * 줄 간 간격 / 텍스트 높이의 비율
+     */
+    private var lineSpacingRatio: Float = DEFAULT_LINE_SPACING_RATIO
 
     //endregion
 
@@ -55,18 +62,25 @@ class TextWatermarkImageView @JvmOverloads constructor(
                     paint.color = it
                 }
 
-                getDimensionPixelSize(
-                    R.styleable.TextWatermarkImageView_watermarkTextLineSpacing,
-                    DEFAULT_LINE_SPACING
+                getFloat(
+                    R.styleable.TextWatermarkImageView_watermarkTextRotationDegree,
+                    DEFAULT_ROTATION_DEGREE
                 ).let {
-                    lineSpacing = it
+                    rotationDegree = it
                 }
 
-                getDimensionPixelSize(
-                    R.styleable.TextWatermarkImageView_watermarkTextLetterSpacing,
-                    DEFAULT_LETTER_SPACING
+                getFloat(
+                    R.styleable.TextWatermarkImageView_watermarkTextLineSpacingRatio,
+                    DEFAULT_LINE_SPACING_RATIO
                 ).let {
-                    spacedBy = it
+                    lineSpacingRatio = it
+                }
+
+                getFloat(
+                    R.styleable.TextWatermarkImageView_watermarkTextLetterSpacingRatio,
+                    DEFAULT_LETTER_SPACING_RATIO
+                ).let {
+                    letterSpacingRatio = it
                 }
 
                 recycle()
@@ -82,16 +96,23 @@ class TextWatermarkImageView @JvmOverloads constructor(
     private fun drawWatermark(canvas: Canvas) {
         val textWidth = paint.measureText(watermarkText)
         val textHeight = paint.fontMetrics.bottom - paint.fontMetrics.top
+        val letterSpacing = textWidth * letterSpacingRatio
+        val lineSpacing = textHeight * lineSpacingRatio
 
-        var y = 0f
-        while (y < height) {
-            var x = Random.nextInt() % textWidth // random start
-            while (x < width) {
+        canvas.save()
+        canvas.rotate(rotationDegree, (width / 2).toFloat(), (height / 2).toFloat())
+
+        var y = -height.toFloat()
+        while (y < height * 2) {
+            var x = -width.toFloat()
+            while (x < width * 2) {
                 canvas.drawText(watermarkText, x, y, paint)
-                x += textWidth + spacedBy.toFloat() // 텍스트 간 간격 조절
+                x += textWidth + letterSpacing
             }
-            y += textHeight + lineSpacing.toFloat() // 텍스트 간 간격 조절
+            y += textHeight + lineSpacing
         }
+
+        canvas.restore()
     }
 
     //region setters
@@ -111,22 +132,13 @@ class TextWatermarkImageView @JvmOverloads constructor(
         invalidate()
     }
 
-    fun setWatermarkTextSpacing(@Px spacing: Int) {
-        spacedBy = spacing
-        invalidate()
-    }
-
-    fun setWatermarkTextLineSpacing(@Px spacing: Int) {
-        lineSpacing = spacing
-        invalidate()
-    }
-
     //endregion
 
     companion object {
         private const val DEFAULT_TEXT_SIZE = 48
         private const val DEFAULT_TEXT_COLOR = Color.WHITE
-        private const val DEFAULT_LINE_SPACING = 100
-        private const val DEFAULT_LETTER_SPACING = 100
+        private const val DEFAULT_ROTATION_DEGREE = -45f
+        private const val DEFAULT_LINE_SPACING_RATIO: Float = 2f
+        private const val DEFAULT_LETTER_SPACING_RATIO: Float = 1f
     }
 }

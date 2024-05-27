@@ -4,9 +4,8 @@
         <attr name="watermarkText" format="string"/>
         <attr name="watermarkTextSize" format="dimension"/>
         <attr name="watermarkTextColor" format="color"/>
-        <attr name="watermarkTextRotate" format="float"/>
-
-        <attr name="watermarkTextLineSpacing" format="dimension"/>
-        <attr name="watermarkTextLetterSpacing" format="dimension"/>
+        <attr name="watermarkTextRotationDegree" format="float"/>
+        <attr name="watermarkTextLineSpacingRatio" format="float"/>
+        <attr name="watermarkTextLetterSpacingRatio" format="float"/>
     </declare-styleable>
 </resources>
