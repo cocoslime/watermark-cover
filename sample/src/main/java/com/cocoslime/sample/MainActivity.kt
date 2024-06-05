@@ -1,7 +1,8 @@
-package com.cocoslime.watermarkcover
+package com.cocoslime.sample
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import com.cocoslime.watermarkcover.R
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

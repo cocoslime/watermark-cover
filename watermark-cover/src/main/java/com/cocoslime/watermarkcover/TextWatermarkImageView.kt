@@ -1,14 +1,20 @@
-package com.cocoslime.watermark_cover_view
+package com.cocoslime.watermarkcover
 
 import android.content.Context
 import android.graphics.Canvas
-import android.graphics.Color
 import android.graphics.Paint
 import android.util.AttributeSet
 import androidx.annotation.Px
 import androidx.appcompat.widget.AppCompatImageView
+import com.cocoslime.watermarkcover.R
+import com.cocoslime.watermarkcover.TextWatermarkDefault.DEFAULT_LETTER_SPACING_RATIO
+import com.cocoslime.watermarkcover.TextWatermarkDefault.DEFAULT_LINE_SPACING_RATIO
+import com.cocoslime.watermarkcover.TextWatermarkDefault.DEFAULT_ROTATION_DEGREE
+import com.cocoslime.watermarkcover.TextWatermarkDefault.DEFAULT_TEXT_COLOR
+import com.cocoslime.watermarkcover.TextWatermarkDefault.DEFAULT_TEXT_SIZE
 
-class TextWatermarkImageView @JvmOverloads constructor(
+
+open class TextWatermarkImageView @JvmOverloads constructor(
     context: Context,
     attrs: AttributeSet? = null,
     defStyleAttr: Int = 0
@@ -90,29 +96,15 @@ class TextWatermarkImageView @JvmOverloads constructor(
 
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
-        drawWatermark(canvas)
-    }
-
-    private fun drawWatermark(canvas: Canvas) {
-        val textWidth = paint.measureText(watermarkText)
-        val textHeight = paint.fontMetrics.bottom - paint.fontMetrics.top
-        val letterSpacing = textWidth * letterSpacingRatio
-        val lineSpacing = textHeight * lineSpacingRatio
-
-        canvas.save()
-        canvas.rotate(rotationDegree, (width / 2).toFloat(), (height / 2).toFloat())
-
-        var y = -height.toFloat()
-        while (y < height * 2) {
-            var x = -width.toFloat()
-            while (x < width * 2) {
-                canvas.drawText(watermarkText, x, y, paint)
-                x += textWidth + letterSpacing
-            }
-            y += textHeight + lineSpacing
-        }
-
-        canvas.restore()
+        canvas.drawWatermark(
+            watermarkText = watermarkText,
+            paint = paint,
+            width = width,
+            height = height,
+            rotationDegree = rotationDegree,
+            letterSpacingRatio = letterSpacingRatio,
+            lineSpacingRatio = lineSpacingRatio
+        )
     }
 
     //region setters
@@ -133,12 +125,4 @@ class TextWatermarkImageView @JvmOverloads constructor(
     }
 
     //endregion
-
-    companion object {
-        private const val DEFAULT_TEXT_SIZE = 48
-        private const val DEFAULT_TEXT_COLOR = Color.WHITE
-        private const val DEFAULT_ROTATION_DEGREE = -45f
-        private const val DEFAULT_LINE_SPACING_RATIO: Float = 2f
-        private const val DEFAULT_LETTER_SPACING_RATIO: Float = 1f
-    }
 }
