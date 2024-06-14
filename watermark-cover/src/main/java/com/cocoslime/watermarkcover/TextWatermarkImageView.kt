@@ -6,7 +6,6 @@ import android.graphics.Paint
 import android.util.AttributeSet
 import androidx.annotation.Px
 import androidx.appcompat.widget.AppCompatImageView
-import com.cocoslime.watermarkcover.R
 import com.cocoslime.watermarkcover.TextWatermarkDefault.DEFAULT_LETTER_SPACING_RATIO
 import com.cocoslime.watermarkcover.TextWatermarkDefault.DEFAULT_LINE_SPACING_RATIO
 import com.cocoslime.watermarkcover.TextWatermarkDefault.DEFAULT_ROTATION_DEGREE
@@ -46,7 +45,7 @@ open class TextWatermarkImageView @JvmOverloads constructor(
     init {
         attrs?.let { attributeSet ->
             context.obtainStyledAttributes(
-                attrs, R.styleable.TextWatermarkImageView, 0, 0
+                attributeSet, R.styleable.TextWatermarkImageView, 0, 0
             ).run {
                 getString(
                     R.styleable.TextWatermarkImageView_watermarkText
@@ -89,6 +88,7 @@ open class TextWatermarkImageView @JvmOverloads constructor(
                     letterSpacingRatio = it
                 }
 
+                invalidate()
                 recycle()
             }
         }
