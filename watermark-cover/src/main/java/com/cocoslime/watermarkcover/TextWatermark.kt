@@ -3,8 +3,7 @@ package com.cocoslime.watermarkcover
 import android.graphics.Canvas
 import android.graphics.Paint
 
-
-fun Canvas.drawWatermark(
+internal fun Canvas.drawWatermark(
     watermarkText: String,
     paint: Paint,
     width: Int,
