@@ -14,7 +14,15 @@ import com.cocoslime.watermarkcover.TextWatermarkDefault.DEFAULT_TEXT_COLOR
 import com.cocoslime.watermarkcover.TextWatermarkDefault.DEFAULT_TEXT_SIZE
 import com.cocoslime.watermarkcover.drawWatermark
 
-
+/**
+ * Draw watermark text on the content of the [Modifier].
+ * @param watermarkText The text to be drawn as watermark.
+ * @param textColor The color of the watermark text.
+ * @param watermarkTextSize The pixel size of the watermark text. Default value is [DEFAULT_TEXT_SIZE]
+ * @param rotationDegree The rotation degree of the watermark text. Default value is [DEFAULT_ROTATION_DEGREE]
+ * @param lineSpacingRatio The line spacing ratio of the watermark text. Default value is [DEFAULT_LINE_SPACING_RATIO]
+ * @param letterSpacingRatio The letter spacing ratio of the watermark text. Default value is [DEFAULT_LETTER_SPACING_RATIO]
+ */
 fun Modifier.drawWatermarkText(
     watermarkText: String,
     textColor: Color = Color(DEFAULT_TEXT_COLOR),
