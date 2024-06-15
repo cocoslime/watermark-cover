@@ -5,16 +5,17 @@ plugins {
     id("org.jetbrains.kotlin.android")
 }
 
-val groupName = "com.cocoslime"
-val applicationName = "watermarkcover"
+// Maven 그룹 및 버전 설정
+group = "io.github.cocoslime"
+version = "0.0.1"
 
 android {
-    namespace = "$groupName.$applicationName"
+    namespace = "com.cocoslime.watermarkcover"
     compileSdk = 34
 
     defaultConfig {
         minSdk = 24
-        version = "1.0.0"
+//        targetSdk = 34
     }
 
     compileOptions {
@@ -36,11 +37,11 @@ dependencies {
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
 
     // Compose
-    val composeBom = platform("androidx.compose:compose-bom:2024.04.00")
-    implementation(composeBom)
-    androidTestImplementation(composeBom)
-    implementation("androidx.compose.runtime:runtime")
-    implementation("androidx.compose.material3:material3")
-    implementation("androidx.compose.foundation:foundation")
-    implementation("androidx.compose.foundation:foundation-layout")
+    // BOM 사용 시 maven publish 에러
+    val composeRuntime = "1.6.5"
+    val composeFoundation = "1.6.5"
+    implementation("androidx.compose.runtime:runtime:$composeRuntime")
+    implementation("androidx.compose.material3:material3:1.2.1")
+    implementation("androidx.compose.foundation:foundation:$composeFoundation")
+    implementation("androidx.compose.foundation:foundation-layout:$composeFoundation")
 }
